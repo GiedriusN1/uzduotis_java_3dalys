@@ -26,8 +26,8 @@
 	GROUP BY s.`name`;
 	
 	-- 5.Išveskite tas parduotuves kuriose yra mažiau nei po 4 prekes.
-	SELECT s.`name` "Parduotuvės pavadinimas", COUNT(NULLIF(quantity,'')) "Prekių kiekis" 
+	SELECT s.`name` "Parduotuvės pavadinimas", COUNT(NULLIF(quantity,'')) AS Kiekis 
         FROM dienynas.products_in_stores ps
 	RIGHT JOIN stores s ON s.id = ps.store_id 
-        WHERE ps.quantity<=4 OR ps.quantity IS NULL
-        GROUP BY s.`name`;
+        GROUP BY s.`name`
+        HAVING Kiekis < 4 ;
