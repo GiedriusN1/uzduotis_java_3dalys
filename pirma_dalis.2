@@ -1,21 +1,28 @@
-		-- 1. Suskaičiuokite kiek iš viso lentelėjeyra prekių(kiek įrašų yra lentelėje products)
-		SELECT COUNT(*) FROM products; 
+	-- 1. Suskaičiuokite kiek iš viso lentelėje yra prekių(kiek įrašų yra lentelėje products)
+	SELECT COUNT(*) FROM products; 
         
-		-- 2.Išveskite visas prekes esančias atitinkamose parduotuvėse. Išvedamas sąrašas turi būti toks:
-		-- parduotuvės pavadinimas, prekės pavadinimas, kaina).
-	   SELECT s.`name` "Parduotuvės pavadinimas", p.`name` "Prekės pavadinimas", ps.price "Kaina" 
-       FROM dienynas.products_in_stores ps
-	   LEFT JOIN stores s ON s.id = ps.store_id 
-	   LEFT JOIN products p ON p.id = ps.product_id
-	   WHERE p.`name` IS NOT null
-       ORDER BY s.`name`;
+	-- 2.Išveskite visas prekes esančias atitinkamose parduotuvėse. Išvedamas sąrašas turi būti toks:
+	-- parduotuvės pavadinimas, prekės pavadinimas, kaina).
+	SELECT s.`name` "Parduotuvės pavadinimas", p.`name` "Prekės pavadinimas", ps.price "Kaina" 
+       	FROM dienynas.products_in_stores ps
+	LEFT JOIN stores s ON s.id = ps.store_id 
+	LEFT JOIN products p ON p.id = ps.product_id
+	WHERE p.`name` IS NOT null
+       	ORDER BY s.`name`;
        
-		-- 3.Išveskite kiek kiekvienoje parduotuvėje yra prekių. Išvedamas sąrašas turi būti toks: 
-    -- parduotuvės pavadinimas, adresas, prekių kiekis).
-		-- Turi būti išvestos parduotuvės ir neturinčios prekių.
-		  SELECT s.`name` "Parduotuvės pavadinimas", s.address Adresas, COUNT(NULLIF(quantity,'')) "Prekių kiekis" 
-      FROM dienynas.products_in_stores ps
-	    RIGHT JOIN stores s ON s.id = ps.store_id 
-		-- WHERE ps.store_id IS NOT null
-      GROUP BY s.`name` 
+	-- 3.Išveskite kiek kiekvienoje parduotuvėje yra prekių. Išvedamas sąrašas turi būti toks: 
+    	-- parduotuvės pavadinimas, adresas, prekių kiekis).
+    	-- Turi būti išvestos parduotuvės ir neturinčios prekių.
+	SELECT s.`name` "Parduotuvės pavadinimas", s.address Adresas, COUNT(NULLIF(quantity,'')) "Prekių kiekis" 
+      	FROM dienynas.products_in_stores ps
+	RIGHT JOIN stores s ON s.id = ps.store_id 
+	GROUP BY s.`name` 
+        ;
+	
+	-- 4.Išveskite visas parduotuves ir jose esančių prekių sumą, t.y. kiek kainuotų visos prekės esančios parduotuvėje.
+        -- Išvedamas sąrašas turi būti toks: parduotuvės pavadinimas, adresas, sandėlio suma.
+	SELECT s.`name` "Parduotuvės pavadinimas", s.address Adresas, IFNULL(SUM(quantity * price), 0)  "Sandėlio suma" 
+        FROM dienynas.products_in_stores ps
+	RIGHT JOIN stores s ON s.id = ps.store_id 
+	GROUP BY s.`name` 
         ;
