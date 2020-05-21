@@ -16,13 +16,11 @@
 	SELECT s.`name` "Parduotuvės pavadinimas", s.address Adresas, COUNT(NULLIF(quantity,'')) "Prekių kiekis" 
       	FROM dienynas.products_in_stores ps
 	RIGHT JOIN stores s ON s.id = ps.store_id 
-	GROUP BY s.`name` 
-        ;
+	GROUP BY s.`name` ;
 	
 	-- 4.Išveskite visas parduotuves ir jose esančių prekių sumą, t.y. kiek kainuotų visos prekės esančios parduotuvėje.
         -- Išvedamas sąrašas turi būti toks: parduotuvės pavadinimas, adresas, sandėlio suma.
 	SELECT s.`name` "Parduotuvės pavadinimas", s.address Adresas, IFNULL(SUM(quantity * price), 0)  "Sandėlio suma" 
         FROM dienynas.products_in_stores ps
 	RIGHT JOIN stores s ON s.id = ps.store_id 
-	GROUP BY s.`name` 
-        ;
+	GROUP BY s.`name` ;
