@@ -31,3 +31,11 @@
 	RIGHT JOIN stores s ON s.id = ps.store_id 
         GROUP BY s.`name`
         HAVING Kiekis < 4 ;
+	
+	-- 5a. Supaprastinta 5
+	SELECT s.name "Parduotuvės pavadinimas", COUNT(*) AS Kiekis 
+	FROM dienynas.stores s
+	LEFT JOIN dienynas.products_in_stores ps ON s.id = ps.store_id 
+	GROUP BY s.name
+	HAVING Kiekis < 4;
+	
