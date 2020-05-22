@@ -39,3 +39,10 @@
 	GROUP BY s.name
 	HAVING Kiekis < 4;
 	
+	-- 6.Išveskite prekių, kurių nėra nei vienoje parduotuvėje, sąrašą;
+	SELECT p.name "Prekės kurių nėra parduotuvėse"
+        FROM products p
+	LEFT OUTER JOIN products_in_stores ps
+        ON p.id = ps.product_id
+        WHERE ps.product_id IS null; 
+	
